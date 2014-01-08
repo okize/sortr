@@ -1,3 +1,3 @@
 # sortie
 
-Node CLI tool that sorts a directory of photos into subdirectories named after date the photo was taken
+CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken
