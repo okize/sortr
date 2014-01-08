@@ -1,1 +1,3 @@
-console.log('sortie');
+#!/usr/bin/env node
+
+console.log('log');
