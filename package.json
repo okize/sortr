@@ -1,0 +1,38 @@
+{
+  "name": "sortie",
+  "version": "0.1.0",
+  "description": "CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken",
+  "preferGlobal": true,
+  "keywords": [
+    "organize",
+    "photos",
+    "images",
+    "directories",
+    "date"
+  ],
+  "main": "./bin/sortie.js",
+  "bin": {
+    "sortie": "./bin/sortie.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "engines": {
+    "node": ">=0.10.0",
+    "npm": ">=1.2.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/okize/sortie"
+  },
+  "bugs": {
+    "url": "https://github.com/okize/sortie/issues"
+  },
+  "homepage": "https://github.com/okize/sortie",
+ "author": {
+    "name": "Morgan Wigmanich",
+    "email": "okize123@gmail.com",
+    "url": "https://github.com/okize"
+  },
+  "license": "MIT"
+}
