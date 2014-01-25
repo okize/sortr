@@ -22,14 +22,11 @@ module.exports = (argv) ->
   flags =
     format: if argv.format or argv.f then argv.format or argv.f else null
 
-  # args passed
-  return app(argv._, flags) if argv._.length > 0
+  # pass args
+  return app(argv._, flags)
 
   # --version
   return displayVersion() if argv.version or argv.V
 
   # --help
   return displayHelp() if argv.help or argv.h
-
-  # no args so display help
-  displayHelp() unless argv._.length
