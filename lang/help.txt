@@ -1,0 +1,17 @@
+Usage:
+
+  sortie [inputDirectory] -options
+
+Description:
+
+  CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken
+
+Options:
+
+  -h, --help           Output usage information
+  -V, --version        Output version number
+  -f, --format         Directory naming format (default is YYYY_MM_DD)
+
+Examples:
+
+  $ sortie ./example -f "DD_MM_YY"
