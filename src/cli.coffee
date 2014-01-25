@@ -18,8 +18,6 @@ displayHelp = ->
 
 module.exports = (argv) ->
 
-  console.log argv
-
   # flags we care about for app operation
   flags =
     format: if argv.format or argv.f then argv.format or argv.f else null
