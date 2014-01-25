@@ -1,3 +1,9 @@
 #!/usr/bin/env node
 
-console.log('sorting...');
+// modules
+var path = require('path'),
+    argv = require('optimist').argv,
+    cli = require(path.resolve(__dirname, '..', 'lib', 'cli'));
+
+// init cli
+cli(argv);
