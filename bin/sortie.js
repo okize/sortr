@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 
-console.log('sorting...')
+console.log('sorting...');
