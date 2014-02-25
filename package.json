@@ -32,11 +32,11 @@
   "author": "Morgan Wigmanich <okize123@gmail.com> (https://github.com/okize)",
   "license": "MIT",
   "dependencies": {
-    "optimist": "~0.6.0",
-    "underscore": "~1.5.2",
-    "moment": "~2.5.1",
-    "bluebird": "~1.0.0",
-    "exif": "~0.3.3",
-    "mmmagic": "~0.3.5"
+    "optimist": "0.6.x",
+    "underscore": "1.5.x",
+    "moment": "2.5.x",
+    "bluebird": "1.0.x",
+    "exif": "0.3.x",
+    "mmmagic": "0.3.x"
   }
 }
