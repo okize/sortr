@@ -1,4 +1,5 @@
 {
+  "private": true,
   "name": "sortie",
   "version": "0.1.0",
   "description": "CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken",
@@ -10,9 +11,8 @@
     "directories",
     "date"
   ],
-  "main": "./bin/sortie.js",
   "bin": {
-    "sortie": "./bin/sortie.js"
+    "sortie": "./bin/sortie"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
