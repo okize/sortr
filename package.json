@@ -24,6 +24,15 @@
     "moment": "*",
     "optimist": "*"
   },
+  "devDependencies": {
+    "coffee-script": "*",
+    "gulp": "*",
+    "gulp-clean": "*",
+    "gulp-coffee": "*",
+    "gulp-coffeelint": "*",
+    "gulp-template": "*",
+    "gulp-util": "*"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -35,7 +44,7 @@
     "type": "git",
     "url": "https://github.com/okize/sortie"
   },
-  "author": "",
+  "author": "Morgan Wigmanich <okize123@gmail.com> (https://github.com/okize)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/okize/sortie/issues"
