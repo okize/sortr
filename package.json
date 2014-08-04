@@ -1,9 +1,11 @@
 {
-  "private": true,
   "name": "sortie",
   "version": "0.1.0",
   "description": "CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken",
-  "preferGlobal": true,
+  "main": "./bin/sortie.js",
+  "bin": {
+    "sortie": "./bin/sortie"
+  },
   "keywords": [
     "organize",
     "photos",
@@ -11,8 +13,16 @@
     "directories",
     "date"
   ],
-  "bin": {
-    "sortie": "./bin/sortie"
+  "directories": {
+    "example": "example"
+  },
+  "dependencies": {
+    "exif": "*",
+    "bluebird": "*",
+    "lodash": "*",
+    "mmmagic": "*",
+    "moment": "*",
+    "optimist": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -25,18 +35,10 @@
     "type": "git",
     "url": "https://github.com/okize/sortie"
   },
+  "author": "",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/okize/sortie/issues"
   },
-  "homepage": "https://github.com/okize/sortie",
-  "author": "Morgan Wigmanich <okize123@gmail.com> (https://github.com/okize)",
-  "license": "MIT",
-  "dependencies": {
-    "optimist": "0.6.x",
-    "underscore": "1.5.x",
-    "moment": "2.5.x",
-    "bluebird": "1.0.x",
-    "exif": "0.3.x",
-    "mmmagic": "0.3.x"
-  }
+  "homepage": "https://github.com/okize/sortie"
 }
