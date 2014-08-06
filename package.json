@@ -17,9 +17,11 @@
     "example": "example"
   },
   "dependencies": {
-    "exif": "*",
     "bluebird": "*",
+    "chalk": "*",
+    "exif": "*",
     "lodash": "*",
+    "mkdirp": "*",
     "mmmagic": "*",
     "moment": "*",
     "optimist": "*"
