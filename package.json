@@ -20,11 +20,13 @@
     "bluebird": "*",
     "chalk": "*",
     "exif": "*",
+    "file-type": "*",
     "lodash": "*",
     "mkdirp": "*",
     "mmmagic": "*",
     "moment": "*",
-    "optimist": "*"
+    "optimist": "*",
+    "read-chunk": "*"
   },
   "devDependencies": {
     "coffee-script": "*",
