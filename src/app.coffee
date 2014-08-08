@@ -3,14 +3,13 @@ Promise = require 'bluebird'
 fs = Promise.promisifyAll require('fs')
 path = require 'path'
 readChunk = require 'read-chunk'
-fileType = require 'file-type'
+isJpg = require 'is-jpg'
 _ = require 'lodash'
 moment = require 'moment'
 chalk = require 'chalk'
 mkdirp = require 'mkdirp'
 
-ExifImage = Promise.promisifyAll require('exif').ExifImage
-
+# logs message types to console with color
 log = (type, msg) ->
   colors =
     error: 'red'
@@ -18,26 +17,24 @@ log = (type, msg) ->
     warning: 'yellow'
   console.log chalk[ colors[type] ] msg
 
+# attempt to make human-readble error messages
 processError = (err) ->
-  if err.cause.code == 'ENOENT'
-    log 'error', 'Input directory not found, please try again'
+  if err.cause?
+    if err.cause.code == 'ENOENT'
+      log 'error', 'Input directory not found, please try again'
   else
     log 'error', err.message
 
+# returns a directory list promise
 getFiles = (directory) ->
   fs.readdirAsync directory
 
+# returns stat object for file
 isFile = (file) ->
   fs.statAsync file
 
-getFileType = (file) ->
-  fileType readChunk.sync(file, 0, 262)
-
-getPhotoDate = (file, callback) ->
-  new ExifImage({ image: file }, (err, exifData) ->
-    callback err if err
-    exifData.exif
-  )
+isPhoto = (file) ->
+  isJpg readChunk.sync(file, 0, 3)
 
 module.exports = (args, opts) ->
 
@@ -49,29 +46,22 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
-  # allowed file formats
-  allowedFormats = ['jpg', 'png', 'gif']
-
-  # blacklist of files to ignore
-  filesToIgnore = [
-    '.DS_Store'
-  ]
-
-  # store number of file found
-  countOfFiles = 0
-
-  # store number of files that will be sorted
-  countOfSortedFiles = 0
+  # option to only sort jpegs not other types of photos
+  onlyPhotos = if opts.photos then opts.photos else true
 
   # open directory of files
-  getFiles(workingDirectory).filter( (filename) ->
-
-    # store full path of file
-    file = workingDirectory + '/' + filename
+  getFiles(workingDirectory)
+  .filter( (filename) ->
 
     # only attempt to read files, not directories or symlinks
-    isFile(file).then( (fileStat) ->
-      file if fileStat.isFile()
+    isFile(workingDirectory + '/' + filename).then( (fileStat) ->
+
+      if fileStat.isFile()
+         # only sort photos
+        if onlyPhotos
+          filename if isPhoto(workingDirectory + '/' + filename)
+        else
+          filename
     )
 
   ).then( (files) ->
