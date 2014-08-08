@@ -23,7 +23,6 @@
     "file-type": "*",
     "lodash": "*",
     "mkdirp": "*",
-    "mmmagic": "*",
     "moment": "*",
     "optimist": "*",
     "read-chunk": "*"
