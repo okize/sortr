@@ -8,7 +8,7 @@ mkdirp = require 'mkdirp'
 chalk = require 'chalk'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
-ExifImage = Promise.promisifyAll require('exif').ExifImage
+exif = Promise.promisifyAll require 'exifdata'
 
 # logs message types to console with color
 log = (type, msg) ->
@@ -40,16 +40,13 @@ isPhoto = (file) ->
   isJpg readChunk.sync(file, 0, 3)
 
 # returns date of photo file
-getPhotoDate = (file, callback) ->
-  new ExifImage({ image: file }, (err, exifData) ->
-    callback err, null if err
-    callback null, exifData.exif.DateTimeOriginal
-  )
+getPhotoDate = (file) ->
+  exif.extractAsync file
 
 module.exports = (args, opts) ->
 
   # sort object: keys are datestamps, properties are arrays of files
-  sort = {}
+  sort = []
 
   # array of files that could not be sorted
   unsortable = []
@@ -73,29 +70,30 @@ module.exports = (args, opts) ->
     # read directory of files
     workingDirectory
 
-  ).filter( (filename) ->
+  ).filter( (file) ->
 
     # only attempt to read files, not directories or symlinks
-    isFile(workingDirectory + '/' + filename).then( (fileStat) ->
-
+    isFile(workingDirectory + '/' + file).then( (fileStat) ->
       if fileStat.isFile()
          # only sort photos
         if onlyPhotos
-          filename if isPhoto(workingDirectory + '/' + filename)
+          file if isPhoto(workingDirectory + '/' + file)
         else
-          filename
+          file
     )
 
-  ).then( (files) ->
+  ).map( (file) ->
 
-    files.forEach (file) ->
-      getPhotoDate(workingDirectory + '/' + file).then( (data) ->
-        data
-      )
+    # create an array of objects with filenames & exif data
+    Promise.props(
+      filename: file
+      date: getPhotoDate(workingDirectory + '/' + file)
+    ).then (result) ->
+      result
 
-  ).then( (files) ->
+  ).then( (data) ->
 
-    console.log files
+    console.log data
 
   ).catch( (err) ->
 
