@@ -4,11 +4,12 @@ fs = Promise.promisifyAll require('fs')
 path = require 'path'
 _ = require 'lodash'
 moment = require 'moment'
-mkdirp = require 'mkdirp'
 chalk = require 'chalk'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
+mkdirp = Promise.promisifyAll require 'mkdirp'
 exif = Promise.promisifyAll require 'exifdata'
+exifdate = require 'exifdate'
 
 # logs message types to console with color
 log = (type, msg) ->
@@ -43,10 +44,15 @@ isPhoto = (file) ->
 getPhotoDate = (file) ->
   exif.extractAsync file
 
+createDirectories = (directories) ->
+  Promise.each(directories, (dir) ->
+    mkdirp dir
+  )
+
 module.exports = (args, opts) ->
 
   # sort object: keys are datestamps, properties are arrays of files
-  sort = []
+  sortable = {}
 
   # array of files that could not be sorted
   unsortable = []
@@ -91,9 +97,24 @@ module.exports = (args, opts) ->
     ).then (result) ->
       result
 
-  ).then( (data) ->
+  ).each( (data) ->
 
-    console.log data
+    date = exifdate data.date.exif.DateTimeOriginal
+    if date is null
+      unsortable.push data.filename
+    else
+      dirDate = moment(date).format(directoryNameFormat)
+      if _.has(sortable, dirDate)
+        sortable[dirDate].push data.filename
+      else
+        sortable[dirDate] = []
+        sortable[dirDate].push data.filename
+
+  ).then( () ->
+
+    createDirectories(
+      _.keys(sortable).map( (dir) -> outputDirectory + '/' + dir)
+    )
 
   ).catch( (err) ->
 
