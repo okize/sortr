@@ -20,6 +20,7 @@
     "bluebird": "*",
     "chalk": "*",
     "exifdata": "*",
+    "exifdate": "*",
     "is-jpg": "*",
     "lodash": "*",
     "mkdirp": "*",
