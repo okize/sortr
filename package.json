@@ -19,8 +19,7 @@
   "dependencies": {
     "bluebird": "*",
     "chalk": "*",
-    "exif": "*",
-    "exif-parser": "*",
+    "exifdata": "*",
     "is-jpg": "*",
     "lodash": "*",
     "mkdirp": "*",
