@@ -25,7 +25,6 @@
     "lodash": "*",
     "mkdirp": "*",
     "moment": "*",
-    "mv": "*",
     "optimist": "*",
     "read-chunk": "*"
   },
