@@ -8,7 +8,6 @@ chalk = require 'chalk'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
 mkdirp = Promise.promisifyAll require 'mkdirp'
-move = Promise.promisifyAll require 'mv'
 exif = Promise.promisifyAll require 'exifdata'
 exifdate = require 'exifdate'
 
@@ -33,7 +32,7 @@ getFiles = (directory) ->
   fs.readdirAsync directory
 
 # returns stat object for file
-isFile = (file) ->
+getFileStat = (file) ->
   fs.statAsync file
 
 # tests whether file is a jpeg
@@ -47,17 +46,14 @@ getPhotoDate = (file) ->
 
 # creates directories from array of directory names
 createDirectories = (directories, outputDirectory) ->
-  Promise.each(directories, (dir) ->
+  Promise.each directories, (dir) ->
     mkdirp(outputDirectory + '/' + dir)
-  )
 
 # moves files into
 sortPhotos = (directories, workingDirectory, outputDirectory, sortable) ->
-  Promise.each(directories, (dir) ->
-    sortable[dir].forEach((file) ->
-      console.log "move #{file} to #{dir}"
-    )
-  )
+  Promise.each directories, (dir) ->
+    Promise.each sortable[dir], (file) ->
+      fs.renameAsync "#{workingDirectory}/#{file}", "#{outputDirectory}/#{dir}/#{file}"
 
 module.exports = (args, opts) ->
 
@@ -89,9 +85,9 @@ module.exports = (args, opts) ->
   ).filter( (file) ->
 
     # only attempt to read files, not directories or symlinks
-    isFile(workingDirectory + '/' + file).then( (fileStat) ->
+    getFileStat(workingDirectory + '/' + file).then( (fileStat) ->
       if fileStat.isFile()
-         # only sort photos
+        # only sort photos if set as option
         if onlyPhotos
           file if isPhoto(workingDirectory + '/' + file)
         else
@@ -124,12 +120,12 @@ module.exports = (args, opts) ->
   ).then( () ->
 
     # create the necessary destination directories
-    createDirectories(_.keys(sortable), outputDirectory).then( (directories) ->
+    createDirectories(_.keys(sortable), outputDirectory)
 
-      # sort photos into their respective directories
-      sortPhotos(directories, workingDirectory, outputDirectory, sortable)
+  ).then( (directories) ->
 
-    )
+    # sort photos into their respective directories
+    sortPhotos(directories, workingDirectory, outputDirectory, sortable)
 
   ).then( () ->
 
