@@ -8,6 +8,7 @@ chalk = require 'chalk'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
 mkdirp = Promise.promisifyAll require 'mkdirp'
+move = Promise.promisifyAll require 'mv'
 exif = Promise.promisifyAll require 'exifdata'
 exifdate = require 'exifdate'
 
@@ -44,9 +45,18 @@ isPhoto = (file) ->
 getPhotoDate = (file) ->
   exif.extractAsync file
 
-createDirectories = (directories) ->
+# creates directories from array of directory names
+createDirectories = (directories, outputDirectory) ->
   Promise.each(directories, (dir) ->
-    mkdirp dir
+    mkdirp(outputDirectory + '/' + dir)
+  )
+
+# moves files into
+sortPhotos = (directories, workingDirectory, outputDirectory, sortable) ->
+  Promise.each(directories, (dir) ->
+    sortable[dir].forEach((file) ->
+      console.log "move #{file} to #{dir}"
+    )
   )
 
 module.exports = (args, opts) ->
@@ -99,6 +109,7 @@ module.exports = (args, opts) ->
 
   ).each( (data) ->
 
+    # get the date of each photo to be sorted and store in sortable object
     date = exifdate data.date.exif.DateTimeOriginal
     if date is null
       unsortable.push data.filename
@@ -112,9 +123,20 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    createDirectories(
-      _.keys(sortable).map( (dir) -> outputDirectory + '/' + dir)
+    # create the necessary destination directories
+    createDirectories(_.keys(sortable), outputDirectory).then( (directories) ->
+
+      # sort photos into their respective directories
+      sortPhotos(directories, workingDirectory, outputDirectory, sortable)
+
     )
+
+  ).then( () ->
+
+    dirCount = _.keys(sortable).length
+    photoCount = _.flatten(_.values(sortable)).length
+    log 'info', "\nfinished sorting #{photoCount} files into #{dirCount} directories"
+    log 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
 
   ).catch( (err) ->
 
