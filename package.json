@@ -21,6 +21,7 @@
     "chalk": "*",
     "exifdata": "*",
     "exifdate": "*",
+    "fs-extra": "*",
     "is-jpg": "*",
     "lodash": "*",
     "mkdirp": "*",
