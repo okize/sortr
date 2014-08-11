@@ -126,7 +126,9 @@ module.exports = (args, opts) ->
     dirCount = _.keys(sortable).length
     photoCount = _.flatten(_.values(sortable)).length
     log 'info', "\nfinished sorting #{photoCount} files into #{dirCount} directories"
-    log 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
+
+    if unsortable.length
+      log 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
 
   ).catch( (err) ->
 
