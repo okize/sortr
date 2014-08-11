@@ -1,6 +1,6 @@
 # modules
 Promise = require 'bluebird'
-fs = Promise.promisifyAll require('fs')
+fs = Promise.promisifyAll require 'fs-extra'
 path = require 'path'
 _ = require 'lodash'
 moment = require 'moment'
@@ -17,17 +17,17 @@ log = (type, msg) ->
     error: 'red'
     info: 'blue'
     warning: 'yellow'
-  console.log chalk[ colors[type] ] msg
+  console.log chalk[colors[type]] msg
 
 # attempt to make human-readble error messages
 processError = (err) ->
   if err.cause?
     if err.cause.code == 'ENOENT'
-      log 'error', 'Input directory not found, please try again'
+      log 'error', 'Directory or file not found, please try again'
   else
     log 'error', err.message
 
-# returns a directory list promise
+# returns a directory listing
 getFiles = (directory) ->
   fs.readdirAsync directory
 
@@ -44,20 +44,18 @@ isPhoto = (file) ->
 getPhotoDate = (file) ->
   exif.extractAsync file
 
-# creates directories from array of directory names
-createDirectories = (directories, outputDirectory) ->
-  Promise.each directories, (dir) ->
-    mkdirp(outputDirectory + '/' + dir)
-
 # moves files into
-sortPhotos = (directories, workingDirectory, outputDirectory, sortable) ->
+sortPhotos = (sortable, workingDirectory, outputDirectory) ->
+  directories = _.keys(sortable)
   Promise.each directories, (dir) ->
     Promise.each sortable[dir], (file) ->
-      fs.renameAsync "#{workingDirectory}/#{file}", "#{outputDirectory}/#{dir}/#{file}"
+      oldPath = path.join(workingDirectory, file)
+      newPath = path.join(outputDirectory, dir, file)
+      fs.moveAsync oldPath, newPath
 
 module.exports = (args, opts) ->
 
-  # sort object: keys are datestamps, properties are arrays of files
+  # sort object: keys are datestamps, values are arrays of files
   sortable = {}
 
   # array of files that could not be sorted
@@ -100,13 +98,13 @@ module.exports = (args, opts) ->
     Promise.props(
       filename: file
       date: getPhotoDate(workingDirectory + '/' + file)
-    ).then (result) ->
-      result
+    )
 
   ).each( (data) ->
 
     # get the date of each photo to be sorted and store in sortable object
     date = exifdate data.date.exif.DateTimeOriginal
+
     if date is null
       unsortable.push data.filename
     else
@@ -119,16 +117,12 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    # create the necessary destination directories
-    createDirectories(_.keys(sortable), outputDirectory)
-
-  ).then( (directories) ->
-
     # sort photos into their respective directories
-    sortPhotos(directories, workingDirectory, outputDirectory, sortable)
+    sortPhotos(sortable, workingDirectory, outputDirectory)
 
   ).then( () ->
 
+    # log summary messages to console
     dirCount = _.keys(sortable).length
     photoCount = _.flatten(_.values(sortable)).length
     log 'info', "\nfinished sorting #{photoCount} files into #{dirCount} directories"
