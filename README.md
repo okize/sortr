@@ -1,4 +1,4 @@
-# sortie [![NPM version](http://img.shields.io/npm/v/sortie.svg?style=flat)](https://www.npmjs.org/package/sortie) [![Dependency Status](http://img.shields.io/david/okize/sortie.svg?style=flat)](https://david-dm.org/okize/sortie) [![Downloads](http://img.shields.io/npm/dm/sortie.svg?style=flat)](https://www.npmjs.org/package/sortie)
+# sortr [![NPM version](http://img.shields.io/npm/v/sortr.svg?style=flat)](https://www.npmjs.org/package/sortr) [![Dependency Status](http://img.shields.io/david/okize/sortr.svg?style=flat)](https://david-dm.org/okize/sortr) [![Downloads](http://img.shields.io/npm/dm/sortr.svg?style=flat)](https://www.npmjs.org/package/sortr)
 
 ## Description
 CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken
@@ -8,7 +8,7 @@ CLI tool that organizes a directory of photos by sorting them into subdirectorie
 ```
 Usage:
 
-  sortie [inputDirectory] -options
+  sortr [inputDirectory] -options
 
 Description:
 
@@ -21,7 +21,7 @@ Options:
 
 Examples:
 
-  $ sortie ./example -f "DD_MM_YY"
+  $ sortr ./example -f "DD_MM_YY"
 
 ```
 

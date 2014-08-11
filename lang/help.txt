@@ -1,6 +1,6 @@
 Usage:
 
-  sortie [inputDirectory] -options
+  sortr [inputDirectory] -options
 
 Description:
 
@@ -14,4 +14,4 @@ Options:
 
 Examples:
 
-  $ sortie ./example -f "DD_MM_YY"
+  $ sortr ./example -f "DD_MM_YY"

@@ -1,7 +1,7 @@
 # modules
 path = require 'path'
 fs = require 'fs'
-sortie = require path.join(__dirname, '..', 'lib', 'app')
+sortr = require path.join(__dirname, '..', 'lib', 'app')
 
 # output version number of app
 displayVersion = ->
@@ -23,7 +23,7 @@ module.exports = (argv) ->
     format: if argv.format or argv.f then argv.format or argv.f else null
 
   # args passed
-  return sortie(argv._, flags) if argv._.length > 0
+  return sortr(argv._, flags) if argv._.length > 0
 
   # --version
   return displayVersion() if argv.version or argv.V
