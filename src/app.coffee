@@ -118,14 +118,18 @@ module.exports = (args, opts) ->
   ).then( () ->
 
     # sort photos into their respective directories
-    sortPhotos(sortable, workingDirectory, outputDirectory)
+    if _.isEmpty sortable
+      log 'warning', 'No sortable photos found!'
+    else
+      sortPhotos(sortable, workingDirectory, outputDirectory)
 
   ).then( () ->
 
     # log summary messages to console
-    dirCount = _.keys(sortable).length
-    photoCount = _.flatten(_.values(sortable)).length
-    log 'info', "\nfinished sorting #{photoCount} files into #{dirCount} directories"
+    if !_.isEmpty sortable
+      dirCount = _.keys(sortable).length
+      photoCount = _.flatten(_.values(sortable)).length
+      log 'info', "\nfinished sorting #{photoCount} files into #{dirCount} directories"
 
     if unsortable.length
       log 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
