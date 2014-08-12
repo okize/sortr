@@ -24,7 +24,6 @@
     "fs-extra": "*",
     "is-jpg": "*",
     "lodash": "*",
-    "mkdirp": "*",
     "moment": "*",
     "optimist": "*",
     "read-chunk": "*"
