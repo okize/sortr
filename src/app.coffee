@@ -7,7 +7,6 @@ moment = require 'moment'
 chalk = require 'chalk'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
-mkdirp = Promise.promisifyAll require 'mkdirp'
 exif = Promise.promisifyAll require 'exifdata'
 exifdate = require 'exifdate'
 
