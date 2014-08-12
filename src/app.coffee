@@ -23,6 +23,8 @@ processError = (err) ->
   if err.cause?
     if err.cause.code == 'ENOENT'
       log 'error', 'Directory or file not found, please try again'
+    else
+      log 'error', err
   else
     log 'error', err.message
 
