@@ -8,7 +8,7 @@ CLI tool that organizes a directory of photos by sorting them into subdirectorie
 ```
 Usage:
 
-  sortr [inputDirectory] -options
+  sortr [inputDirectory] [outputDirectory] -options
 
 Description:
 
@@ -18,10 +18,11 @@ Options:
 
   -h, --help           Output usage information
   -V, --version        Output version number
+  -f, --format         Directory naming format (default is YYYY_MM_DD)
 
 Examples:
 
-  $ sortr ./example -f "DD_MM_YY"
+  $ sortr ./example ./sortedExample -f "DD_MM_YY"
 
 ```
 
