@@ -73,9 +73,6 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
-  # option to only sort jpegs not other types of photos
-  onlyPhotos = if opts.photos then opts.photos else true
-
   getFiles(
 
     # read directory of files
@@ -85,12 +82,11 @@ module.exports = (args, opts) ->
 
     # only attempt to read files, not directories or symlinks
     getFileStat(workingDirectory + '/' + file).then( (fileStat) ->
+
+      # only sort photos
       if fileStat.isFile()
-        # only sort photos if set as option
-        if onlyPhotos
-          file if isPhoto(workingDirectory + '/' + file)
-        else
-          file
+        file if isPhoto(workingDirectory + '/' + file)
+
     )
 
   ).map( (file) ->
