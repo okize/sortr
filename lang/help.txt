@@ -1,6 +1,6 @@
 Usage:
 
-  sortr [inputDirectory] -options
+  sortr [inputDirectory] [outputDirectory] -options
 
 Description:
 
@@ -14,4 +14,4 @@ Options:
 
 Examples:
 
-  $ sortr ./example -f "DD_MM_YY"
+  $ sortr ./example ./sortedExample -f "DD_MM_YY"
