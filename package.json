@@ -17,16 +17,16 @@
     "example": "example"
   },
   "dependencies": {
-    "bluebird": "*",
-    "chalk": "*",
-    "exifdata": "*",
-    "exifdate": "*",
-    "fs-extra": "*",
-    "is-jpg": "*",
-    "lodash": "*",
-    "moment": "*",
-    "optimist": "*",
-    "read-chunk": "*"
+    "bluebird": "2.2.x",
+    "chalk": "0.5.x",
+    "exifdata": "0.2.x",
+    "exifdate": "0.1.x",
+    "fs-extra": "0.10.x",
+    "is-jpg": "0.1.x",
+    "lodash": "2.4.x",
+    "moment": "2.8.x",
+    "optimist": "0.6.x",
+    "read-chunk": "0.1.x"
   },
   "devDependencies": {
     "coffee-script": "*",
