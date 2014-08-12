@@ -46,11 +46,11 @@ getPhotoDate = (file) ->
   exif.extractAsync file
 
 # moves files into
-sortPhotos = (sortable, workingDirectory, outputDirectory) ->
+sortPhotos = (sortable, inputDirectory, outputDirectory) ->
   directories = _.keys(sortable)
   Promise.each directories, (dir) ->
     Promise.each sortable[dir], (file) ->
-      oldPath = path.join(workingDirectory, file)
+      oldPath = path.join(inputDirectory, file)
       newPath = path.join(outputDirectory, dir, file)
       fs.moveAsync oldPath, newPath
 
@@ -64,7 +64,7 @@ module.exports = (args, opts) ->
 
   # directory to red files from
   # if no directory arg passed then assume current working directory
-  workingDirectory = if args[0] then args[0] else process.cwd()
+  inputDirectory = if args[0] then args[0] else process.cwd()
 
   # directory to output sorted files & directories to
   # if no directory arg passed then assume current working directory
@@ -76,16 +76,16 @@ module.exports = (args, opts) ->
   getFiles(
 
     # read directory of files
-    workingDirectory
+    inputDirectory
 
   ).filter( (file) ->
 
     # only attempt to read files, not directories or symlinks
-    getFileStat(workingDirectory + '/' + file).then( (fileStat) ->
+    getFileStat(inputDirectory + '/' + file).then( (fileStat) ->
 
       # only sort photos
       if fileStat.isFile()
-        file if isPhoto(workingDirectory + '/' + file)
+        file if isPhoto(inputDirectory + '/' + file)
 
     )
 
@@ -94,7 +94,7 @@ module.exports = (args, opts) ->
     # create an array of objects with filenames & exif data
     Promise.props(
       filename: file
-      date: getPhotoDate(workingDirectory + '/' + file)
+      date: getPhotoDate(inputDirectory + '/' + file)
     )
 
   ).each( (data) ->
@@ -118,7 +118,7 @@ module.exports = (args, opts) ->
     if _.isEmpty sortable
       log 'warning', 'No sortable photos found!'
     else
-      sortPhotos(sortable, workingDirectory, outputDirectory)
+      sortPhotos(sortable, inputDirectory, outputDirectory)
 
   ).then( () ->
 
