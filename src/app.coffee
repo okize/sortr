@@ -56,6 +56,9 @@ sortPhotos = (sortable, inputDirectory, outputDirectory) ->
 
 module.exports = (args, opts) ->
 
+  # start timer to track time to run script
+  timer = process.hrtime()
+
   # sort object: keys are datestamps, values are arrays of files
   sortable = {}
 
@@ -126,7 +129,9 @@ module.exports = (args, opts) ->
     if !_.isEmpty sortable
       dirCount = _.keys(sortable).length
       photoCount = _.flatten(_.values(sortable)).length
-      log 'info', "\nfinished sorting #{photoCount} files into #{dirCount} directories"
+      diff = process.hrtime(timer)
+      timeToRun = ((diff[0] * 1e9) + diff[1]) / 1e9
+      log 'info', "\ntook #{timeToRun.toPrecision(4)} seconds to sort #{photoCount} files into #{dirCount} directories"
 
     if unsortable.length
       log 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
