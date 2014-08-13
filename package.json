@@ -20,7 +20,6 @@
     "bluebird": "2.2.x",
     "chalk": "0.5.x",
     "exifdata": "0.2.x",
-    "exifdate": "0.1.x",
     "fs-extra": "0.10.x",
     "is-jpg": "0.1.x",
     "lodash": "2.4.x",
