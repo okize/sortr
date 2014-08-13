@@ -8,7 +8,6 @@ chalk = require 'chalk'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
 exif = Promise.promisifyAll require 'exifdata'
-exifdate = require 'exifdate'
 
 # logs message types to console with color
 log = (type, msg) ->
@@ -44,6 +43,18 @@ isPhoto = (file) ->
 # returns date of photo file
 getPhotoDate = (file) ->
   exif.extractAsync file
+
+convertExifDate = (exifDate) ->
+  regex = /^(\d{4}):(\d{2}):(\d{2}) (\d{2}):(\d{2}):(\d{2})$/
+  parse = regex.exec(exifDate)
+  return null if not parse or parse.length != 7
+  year = parseInt(parse[1], 10)
+  month = parseInt(parse[2], 10) - 1
+  day = parseInt(parse[3], 10)
+  hour = parseInt(parse[4], 10)
+  minute = parseInt(parse[5], 10)
+  second = parseInt(parse[6], 10)
+  new Date(Date.UTC(year, month, day, hour, minute, second))
 
 # moves files into
 sortPhotos = (sortable, inputDirectory, outputDirectory) ->
@@ -103,7 +114,7 @@ module.exports = (args, opts) ->
   ).each( (data) ->
 
     # get the date of each photo to be sorted and store in sortable object
-    date = exifdate data.date.exif.DateTimeOriginal
+    date = convertExifDate data.date.exif.DateTimeOriginal
 
     if date is null
       unsortable.push data.filename
