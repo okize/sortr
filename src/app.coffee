@@ -95,11 +95,11 @@ module.exports = (args, opts) ->
   ).filter( (file) ->
 
     # only attempt to read files, not directories or symlinks
-    getFileStat(inputDirectory + '/' + file).then( (fileStat) ->
+    getFileStat(path.join(inputDirectory, file)).then( (fileStat) ->
 
       # only sort photos
       if fileStat.isFile()
-        file if isPhoto(inputDirectory + '/' + file)
+        file if isPhoto(path.join(inputDirectory, file))
 
     )
 
@@ -108,7 +108,7 @@ module.exports = (args, opts) ->
     # create an array of objects with filenames & exif data
     Promise.props(
       filename: file
-      date: getPhotoDate(inputDirectory + '/' + file)
+      date: getPhotoDate(path.join(inputDirectory, file))
     )
 
   ).each( (data) ->
