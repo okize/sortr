@@ -12,6 +12,7 @@ exif = Promise.promisifyAll require 'exifdata'
 # logs message types to console with color
 log = (type, msg) ->
   colors =
+    status: 'white'
     error: 'red'
     info: 'blue'
     warning: 'yellow'
@@ -87,12 +88,17 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
+  log 'status', '- reading input directory files' if opts.verbose
+
   getFiles(
 
     # read directory of files
     inputDirectory
 
-  ).filter( (file) ->
+  ).filter( (file, i) ->
+
+    if i is 0
+      log 'status', '- filtering non-photo files from sort set' if opts.verbose
 
     # only attempt to read files, not directories or symlinks
     getFileStat(path.join(inputDirectory, file)).then( (fileStat) ->
@@ -103,7 +109,10 @@ module.exports = (args, opts) ->
 
     )
 
-  ).map( (file) ->
+  ).map( (file, i) ->
+
+    if i is 0
+      log 'status', '- reading photo exif dates' if opts.verbose
 
     # create an array of objects with filenames & exif data
     Promise.props(
@@ -128,6 +137,8 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
+    log 'status', '- sorting photos into directories' if opts.verbose
+
     # sort photos into their respective directories
     if _.isEmpty sortable
       log 'warning', 'No sortable photos found!'
@@ -135,6 +146,8 @@ module.exports = (args, opts) ->
       sortPhotos(sortable, inputDirectory, outputDirectory)
 
   ).then( () ->
+
+    log 'status', '- finished!' if opts.verbose
 
     # log summary messages to console
     if !_.isEmpty sortable
