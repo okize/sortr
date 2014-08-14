@@ -21,6 +21,7 @@ module.exports = (argv) ->
   # flags we care about for app operation
   flags =
     format: if argv.format or argv.f then argv.format or argv.f else null
+    verbose: if argv.verbose or argv.v then true else false
 
   # args passed
   return sortr(argv._, flags) if argv._.length > 0
