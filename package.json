@@ -1,6 +1,6 @@
 {
   "name": "sortr",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken",
   "main": "./bin/sortr.js",
   "bin": {
