@@ -11,7 +11,8 @@ Options:
   -h, --help           Output usage information
   -V, --version        Output version number
   -f, --format         Directory naming format (default is YYYY_MM_DD)
-  -v, --verbose        Verbose mode; will log application progress to the console
+  -s, --stats          Displays application statistics at completion
+  -v, --verbose        Verbose mode logs application progress to the console
 
 Examples:
 
