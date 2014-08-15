@@ -66,6 +66,12 @@ sortPhotos = (sortable, inputDirectory, outputDirectory) ->
       newPath = path.join(outputDirectory, dir, file)
       fs.moveAsync oldPath, newPath
 
+# given a timer argument will return time elapsed since timer started
+getProgressTime = (timer) ->
+  diff = process.hrtime(timer)
+  time = ((diff[0] * 1e9) + diff[1]) / 1e9
+  time.toPrecision(4)
+
 module.exports = (args, opts) ->
 
   # start timer to track time to run script
@@ -153,9 +159,7 @@ module.exports = (args, opts) ->
     if !_.isEmpty(sortable) and opts.stats
       dirCount = _.keys(sortable).length
       photoCount = _.flatten(_.values(sortable)).length
-      diff = process.hrtime(timer)
-      timeToRun = ((diff[0] * 1e9) + diff[1]) / 1e9
-      log 'info', "\ntook #{timeToRun.toPrecision(4)} seconds to sort #{photoCount} files into #{dirCount} directories"
+      log 'info', "\ntook #{getProgressTime(timer)} seconds to sort #{photoCount} files into #{dirCount} directories"
 
     if unsortable.length
       log 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
