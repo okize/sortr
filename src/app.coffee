@@ -94,7 +94,7 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
-  log 'status', '- reading input directory files' if opts.verbose
+  log 'status', "- reading input directory files (#{getProgressTime(timer)}s)" if opts.verbose
 
   getFiles(
 
@@ -104,7 +104,7 @@ module.exports = (args, opts) ->
   ).filter( (file, i) ->
 
     if i is 0
-      log 'status', '- filtering non-photo files from sort set' if opts.verbose
+      log 'status', "- filtering non-photo files from sort set (#{getProgressTime(timer)}s)" if opts.verbose
 
     # only attempt to read files, not directories or symlinks
     getFileStat(path.join(inputDirectory, file)).then( (fileStat) ->
@@ -118,7 +118,7 @@ module.exports = (args, opts) ->
   ).map( (file, i) ->
 
     if i is 0
-      log 'status', '- reading photo exif dates' if opts.verbose
+      log 'status', "- reading photo exif dates (#{getProgressTime(timer)}s)" if opts.verbose
 
     # create an array of objects with filenames & exif data
     Promise.props(
@@ -143,7 +143,7 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    log 'status', '- sorting photos into directories' if opts.verbose
+    log 'status', "- sorting photos into directories (#{getProgressTime(timer)}s)" if opts.verbose
 
     # sort photos into their respective directories
     if _.isEmpty sortable
@@ -153,7 +153,7 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    log 'status', '- finished!' if opts.verbose
+    log 'status', "- finished! (#{getProgressTime(timer)}s)" if opts.verbose
 
     # log summary messages to console
     if !_.isEmpty(sortable) and opts.stats
