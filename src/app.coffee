@@ -66,11 +66,17 @@ sortPhotos = (sortable, inputDirectory, outputDirectory) ->
       newPath = path.join(outputDirectory, dir, file)
       fs.moveAsync oldPath, newPath
 
+# given a number, returns that number truncated to specified decimal place
+floorFigure = (figure, decimals) ->
+  decimals = 2  unless decimals
+  d = Math.pow(10, decimals)
+  (parseInt(figure * d) / d).toFixed decimals
+
 # given a timer argument will return time elapsed since timer started
 getProgressTime = (timer) ->
   diff = process.hrtime(timer)
   time = ((diff[0] * 1e9) + diff[1]) / 1e9
-  time.toPrecision(4)
+  floorFigure(time, 3)
 
 module.exports = (args, opts) ->
 
