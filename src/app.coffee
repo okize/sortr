@@ -150,7 +150,7 @@ module.exports = (args, opts) ->
     log 'status', '- finished!' if opts.verbose
 
     # log summary messages to console
-    if !_.isEmpty sortable
+    if !_.isEmpty(sortable) and opts.stats
       dirCount = _.keys(sortable).length
       photoCount = _.flatten(_.values(sortable)).length
       diff = process.hrtime(timer)
