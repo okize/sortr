@@ -19,6 +19,9 @@ Options:
   -h, --help           Output usage information
   -V, --version        Output version number
   -f, --format         Directory naming format (default is YYYY_MM_DD)
+  -d, --dryrun         Does a dry-run of where photos will be moved to
+  -s, --stats          Displays application statistics at completion
+  -v, --verbose        Verbose mode logs application progress to the console
 
 Examples:
 
