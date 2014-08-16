@@ -21,6 +21,7 @@ module.exports = (argv) ->
   # flags we care about for app operation
   flags =
     format: if argv.format or argv.f then argv.format or argv.f else null
+    dryrun: if argv.dryrun or argv.d then true else false
     verbose: if argv.verbose or argv.v then true else false
     stats: if argv.stats or argv.s then true else false
 
