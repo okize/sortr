@@ -13,6 +13,7 @@ exif = Promise.promisifyAll require 'exifdata'
 log = (type, msg) ->
   colors =
     status: 'white'
+    dryRun: 'green'
     error: 'red'
     info: 'blue'
     warning: 'yellow'
@@ -58,13 +59,16 @@ convertExifDate = (exifDate) ->
   new Date(Date.UTC(year, month, day, hour, minute, second))
 
 # moves files into
-sortPhotos = (sortable, inputDirectory, outputDirectory) ->
+sortPhotos = (sortable, inputDirectory, outputDirectory, dryRun) ->
   directories = _.keys(sortable)
   Promise.each directories, (dir) ->
     Promise.each sortable[dir], (file) ->
       oldPath = path.join(inputDirectory, file)
       newPath = path.join(outputDirectory, dir, file)
-      fs.moveAsync oldPath, newPath
+      unless dryRun
+        fs.moveAsync oldPath, newPath
+      else
+        log 'dryRun', "will move #{file} to #{outputDirectory}/#{dir}/"
 
 # given a number, returns that number truncated to specified decimal place
 floorFigure = (figure, decimals) ->
@@ -155,14 +159,17 @@ module.exports = (args, opts) ->
     if _.isEmpty sortable
       log 'warning', 'No sortable photos found!'
     else
-      sortPhotos(sortable, inputDirectory, outputDirectory)
+      unless opts.dryrun
+        sortPhotos(sortable, inputDirectory, outputDirectory, false)
+      else
+        sortPhotos(sortable, inputDirectory, outputDirectory, true)
 
   ).then( () ->
 
     log 'status', "- finished! (#{getProgressTime(timer)}s)" if opts.verbose
 
     # log summary messages to console
-    if !_.isEmpty(sortable) and opts.stats
+    if !_.isEmpty(sortable) and opts.stats and !opts.dryrun
       dirCount = _.keys(sortable).length
       photoCount = _.flatten(_.values(sortable)).length
       log 'info', "\ntook #{getProgressTime(timer)} seconds to sort #{photoCount} files into #{dirCount} directories"
