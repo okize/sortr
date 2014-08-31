@@ -1,7 +1,20 @@
-# sortr [![NPM version](http://img.shields.io/npm/v/sortr.svg?style=flat)](https://www.npmjs.org/package/sortr) [![Dependency Status](http://img.shields.io/david/okize/sortr.svg?style=flat)](https://david-dm.org/okize/sortr) [![Downloads](http://img.shields.io/npm/dm/sortr.svg?style=flat)](https://www.npmjs.org/package/sortr)
+[![NPM version](http://img.shields.io/npm/v/<%= name %>.svg?style=flat)](https://www.npmjs.org/package/<%= name %>)
+[![Dependency Status](http://img.shields.io/david/okize/<%= name %>.svg?style=flat)](https://david-dm.org/okize/<%= name %>)
+[![Downloads](http://img.shields.io/npm/dm/<%= name %>.svg?style=flat)](https://www.npmjs.org/package/<%= name %>)
+
+# <%= name %>
+
+## Installation
+
+First install [node.js](http://nodejs.org/). Then:
+
+```
+$ npm install -g <%= name %>
+```
 
 ## Description
-CLI tool that organizes a directory of photos by sorting them into subdirectories named after date the photo was taken
+
+<%= description %>
 
 ## Usage
 
