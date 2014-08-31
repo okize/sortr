@@ -18,6 +18,10 @@ buildDir = 'lib'
 log = (msg) ->
   gutil.log gutil.colors.blue(msg)
 
+# returns parsed package.json
+getPackage = ->
+  JSON.parse fs.readFileSync('./package.json', 'utf8')
+
 # default task that's run with 'gulp'
 gulp.task 'default', [
   'watch'
@@ -59,9 +63,11 @@ gulp.task 'build', ->
 # generates readme.md
 gulp.task 'docs', ->
   log 'create documentation'
+  pak = getPackage()
   gulp
     .src(readmeTemplate)
     .pipe(template
+      name: pak.name
       helpfile: fs.readFileSync 'lang/help.txt', 'utf8'
     )
     .pipe(
