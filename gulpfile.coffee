@@ -68,6 +68,7 @@ gulp.task 'docs', ->
     .src(readmeTemplate)
     .pipe(template
       name: pak.name
+      description: pak.description
       helpfile: fs.readFileSync 'lang/help.txt', 'utf8'
     )
     .pipe(
