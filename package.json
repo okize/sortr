@@ -17,15 +17,15 @@
     "example": "example"
   },
   "dependencies": {
-    "bluebird": "2.2.x",
+    "bluebird": "2.3.x",
     "chalk": "0.5.x",
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
-    "fs-extra": "0.10.x",
-    "is-jpg": "0.1.x",
+    "fs-extra": "0.11.x",
+    "is-jpg": "1.0.x",
     "lodash": "2.4.x",
     "moment": "2.8.x",
     "optimist": "0.6.x",
-    "read-chunk": "0.1.x"
+    "read-chunk": "1.0.x"
   },
   "devDependencies": {
     "coffee-script": "*",
