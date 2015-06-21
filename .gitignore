@@ -1,4 +1,3 @@
-node_modules/
-npm-debug.log
-example/
-sorted/
+node_modules
+*.log
+test
