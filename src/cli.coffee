@@ -1,4 +1,3 @@
-# modules
 path = require 'path'
 fs = require 'fs'
 sortr = require path.join(__dirname, '..', 'lib', 'app')
