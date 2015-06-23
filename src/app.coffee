@@ -16,6 +16,18 @@ getFiles = (directory) ->
 getFileStat = (file) ->
   fs.statAsync file
 
+# given a number, returns that number truncated to specified decimal place
+floorFigure = (figure, decimals) ->
+  decimals = 2  unless decimals
+  d = Math.pow(10, decimals)
+  (parseInt(figure * d) / d).toFixed decimals
+
+# given a timer argument will return time elapsed since timer started
+getProgressTime = (timer) ->
+  diff = process.hrtime(timer)
+  time = ((diff[0] * 1e9) + diff[1]) / 1e9
+  floorFigure(time, 3)
+
 # tests whether file is a jpeg
 # this is sync but would be better to be async
 isPhoto = (file) ->
@@ -48,18 +60,6 @@ sortPhotos = (sortable, inputDirectory, outputDirectory, dryRun, log) ->
         fs.moveAsync oldPath, newPath
       else
         log.msg 'dryRun', "will move #{file} to #{outputDirectory}/#{dir}/"
-
-# given a number, returns that number truncated to specified decimal place
-floorFigure = (figure, decimals) ->
-  decimals = 2  unless decimals
-  d = Math.pow(10, decimals)
-  (parseInt(figure * d) / d).toFixed decimals
-
-# given a timer argument will return time elapsed since timer started
-getProgressTime = (timer) ->
-  diff = process.hrtime(timer)
-  time = ((diff[0] * 1e9) + diff[1]) / 1e9
-  floorFigure(time, 3)
 
 module.exports = (args, opts) ->
 

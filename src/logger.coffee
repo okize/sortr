@@ -4,14 +4,19 @@ class Logger
   constructor: (@options) ->
 
   # logs message types to console with color
-  msg: (type, msg) ->
+  msg: (type, msg, timer) ->
+
+    # color config
     colors =
       status: 'white'
       dryRun: 'green'
       error: 'red'
       info: 'blue'
       warning: 'yellow'
-    console.log chalk[colors[type]] msg if @options.verbose
+
+    # log message if verbose flag is set or there is an error
+    if @options.verbose || type is 'error'
+      console.log chalk[colors[type]] msg
 
   # attempt to make human-readble error messages
   error: (err) ->
