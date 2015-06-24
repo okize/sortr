@@ -16,18 +16,6 @@ getFiles = (directory) ->
 getFileStat = (file) ->
   fs.statAsync file
 
-# given a number, returns that number truncated to specified decimal place
-floorFigure = (figure, decimals) ->
-  decimals = 2  unless decimals
-  d = Math.pow(10, decimals)
-  (parseInt(figure * d) / d).toFixed decimals
-
-# given a timer argument will return time elapsed since timer started
-getProgressTime = (timer) ->
-  diff = process.hrtime(timer)
-  time = ((diff[0] * 1e9) + diff[1]) / 1e9
-  floorFigure(time, 3)
-
 # tests whether file is a jpeg
 # this is sync but would be better to be async
 isPhoto = (file) ->
@@ -86,7 +74,7 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
-  log.msg 'status', "- reading input directory files (#{getProgressTime(timer)}s)"
+  log.msg 'status', "- reading input directory files", timer
 
   getFiles(
 
@@ -96,7 +84,7 @@ module.exports = (args, opts) ->
   ).filter( (file, i) ->
 
     if i is 0
-      log.msg 'status', "- filtering non-photo files from sort set (#{getProgressTime(timer)}s)"
+      log.msg 'status', "- filtering non-photo files from sort set", timer
 
     # only attempt to read files, not directories or symlinks
     getFileStat(path.join(inputDirectory, file)).then( (fileStat) ->
@@ -110,7 +98,7 @@ module.exports = (args, opts) ->
   ).map( (file, i) ->
 
     if i is 0
-      log.msg 'status', "- reading photo exif dates (#{getProgressTime(timer)}s)"
+      log.msg 'status', "- reading photo exif dates", timer
 
     # create an array of objects with filenames & exif data
     Promise.props(
@@ -135,7 +123,7 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    log.msg 'status', "- sorting photos into directories (#{getProgressTime(timer)}s)"
+    log.msg 'status', "- sorting photos into directories", timer
 
     # sort photos into their respective directories
     if _.isEmpty sortable
@@ -145,7 +133,7 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    log.msg 'status', "- finished! (#{getProgressTime(timer)}s)"
+    log.msg 'status', "- finished!", timer
 
     # log.msg summary messages to console
     if !_.isEmpty(sortable) and opts.stats and !opts.dryrun
