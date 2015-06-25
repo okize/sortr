@@ -133,16 +133,18 @@ module.exports = (args, opts) ->
 
   ).then( () ->
 
-    log.msg 'status', "- finished!", timer
-
     # log.msg summary messages to console
     if !_.isEmpty(sortable) and opts.stats and !opts.dryrun
       dirCount = _.keys(sortable).length
       photoCount = _.flatten(_.values(sortable)).length
-      log.msg 'info', "\ntook #{getProgressTime(timer)} seconds to sort #{photoCount} files into #{dirCount} directories"
+      log.msg 'info', "\nsorted #{photoCount} files into #{dirCount} directories"
 
     if unsortable.length
       log.msg 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
+
+  ).finally( () ->
+
+    log.msg 'status', "- sorting complete!", timer
 
   ).catch( (error) ->
 
