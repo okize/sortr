@@ -21,7 +21,7 @@ class Logger
     # color config
     colors =
       status: 'white'
-      dryRun: 'green'
+      move: 'green'
       error: 'red'
       info: 'blue'
       warning: 'yellow'

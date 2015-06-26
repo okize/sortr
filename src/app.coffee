@@ -46,8 +46,7 @@ sortPhotos = (sortable, inputDirectory, outputDirectory, dryRun, log) ->
       newPath = path.join(outputDirectory, dir, file)
       unless dryRun
         fs.moveAsync oldPath, newPath
-      else
-        log.msg 'dryRun', "will move #{file} to #{outputDirectory}/#{dir}/"
+      log.msg 'move', "\t#{file} -> #{outputDirectory}/#{dir}/"
 
 module.exports = (args, opts) ->
 
@@ -74,6 +73,8 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
+  log.msg 'warning', "\nTHIS IS JUST A DRY RUN, NO FILES WILL BE SORTED!\n" if opts.dryrun
+
   log.msg 'status', "- reading input directory files", timer
 
   getFiles(
@@ -83,8 +84,7 @@ module.exports = (args, opts) ->
 
   ).filter( (file, i) ->
 
-    if i is 0
-      log.msg 'status', "- filtering non-photo files from sort set", timer
+    log.msg 'status', "- filtering non-photo files from sort set", timer if i is 0
 
     # only attempt to read files, not directories or symlinks
     getFileStat(path.join(inputDirectory, file)).then( (fileStat) ->
@@ -97,8 +97,7 @@ module.exports = (args, opts) ->
 
   ).map( (file, i) ->
 
-    if i is 0
-      log.msg 'status', "- reading photo exif dates", timer
+    log.msg 'status', "- reading photo exif dates", timer if i is 0
 
     # create an array of objects with filenames & exif data
     Promise.props(
@@ -131,20 +130,18 @@ module.exports = (args, opts) ->
     else
       sortPhotos(sortable, inputDirectory, outputDirectory, opts.dryrun, log)
 
-  ).then( () ->
+  ).finally( () ->
+
+    log.msg 'status', "- sorting complete!", timer
 
     # log.msg summary messages to console
     if !_.isEmpty(sortable) and opts.stats and !opts.dryrun
       dirCount = _.keys(sortable).length
       photoCount = _.flatten(_.values(sortable)).length
-      log.msg 'info', "\nsorted #{photoCount} files into #{dirCount} directories"
+      log.msg 'info', "sorted #{photoCount} files into #{dirCount} directories"
 
     if unsortable.length
-      log.msg 'warning', "\ncould not sort the following files: #{unsortable.join(',')}"
-
-  ).finally( () ->
-
-    log.msg 'status', "- sorting complete!", timer
+      log.msg 'warning', "could not sort the following files: #{unsortable.join(', ')}"
 
   ).catch( (error) ->
 
