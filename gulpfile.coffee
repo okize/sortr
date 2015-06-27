@@ -44,7 +44,7 @@ gulp.task 'lint', ->
   log 'linting coffeescript'
   gulp
     .src(sourceDir)
-    .pipe(coffeelint())
+    .pipe(coffeelint('.coffeelintrc'))
     .pipe(coffeelint.reporter())
 
 # builds coffeescript source into deployable javascript
