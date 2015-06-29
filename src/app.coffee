@@ -73,7 +73,7 @@ module.exports = (args, opts) ->
   # use option format or default if none
   directoryNameFormat = if opts.format then opts.format else 'YYYY_MM_DD'
 
-  log.msg 'warning', "\nTHIS IS JUST A DRY RUN, NO FILES WILL BE SORTED!\n" if opts.dryrun
+  log.msg 'warning', "\nDRY RUN, NO FILES WILL BE SORTED!\n" if opts.dryrun
 
   log.msg 'status', "- reading input directory files", timer
 
@@ -84,7 +84,7 @@ module.exports = (args, opts) ->
 
   ).filter( (file, i) ->
 
-    log.msg 'status', "- filtering non-photo files from sort set", timer if i is 0
+    log.msg 'status', "- filtering non-photo files from set", timer if i is 0
 
     # only attempt to read files, not directories or symlinks
     getFileStat(path.join(inputDirectory, file)).then( (fileStat) ->
@@ -120,7 +120,7 @@ module.exports = (args, opts) ->
         sortable[dirDate] = []
         sortable[dirDate].push data.filename
 
-  ).then( () ->
+  ).then( ->
 
     log.msg 'status', "- sorting photos into directories", timer
 
@@ -130,7 +130,7 @@ module.exports = (args, opts) ->
     else
       sortPhotos(sortable, inputDirectory, outputDirectory, opts.dryrun, log)
 
-  ).finally( () ->
+  ).finally( ->
 
     log.msg 'status', "- sorting complete!", timer
 
@@ -141,7 +141,8 @@ module.exports = (args, opts) ->
       log.msg 'info', "sorted #{photoCount} files into #{dirCount} directories"
 
     if unsortable.length
-      log.msg 'warning', "could not sort the following files: #{unsortable.join(', ')}"
+      unsortables = unsortable.join(', ')
+      log.msg 'warning', "could not sort the following files: #{unsortables}"
 
   ).catch( (error) ->
 
