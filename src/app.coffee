@@ -6,7 +6,7 @@ moment = require 'moment'
 readChunk = require 'read-chunk'
 isJpg = require 'is-jpg'
 exif = Promise.promisifyAll require 'exifdata'
-Logger = require(path.resolve(__dirname, './', 'logger'));
+Logger = require(path.resolve(__dirname, './', 'logger'))
 
 # returns a directory listing
 getFiles = (directory) ->
@@ -51,7 +51,7 @@ sortPhotos = (sortable, inputDirectory, outputDirectory, dryRun, log) ->
 module.exports = (args, opts) ->
 
   # init logger
-  log = new Logger(opts);
+  log = new Logger(opts)
 
   # start timer to track time to run script
   timer = process.hrtime()

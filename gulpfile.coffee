@@ -30,7 +30,7 @@ gulp.task 'default', [
 # watches source files and triggers build on change
 gulp.task 'watch', ->
   log 'watching files...'
-  gulp.watch sourceDir, ['build']
+  gulp.watch sourceDir, ['build', 'lint']
 
 # removes distribution folder
 gulp.task 'clean', ->
