@@ -5,8 +5,9 @@ gulp = require 'gulp'
 gutil = require 'gulp-util'
 coffee = require 'gulp-coffee'
 coffeelint = require 'gulp-coffeelint'
+plumber = require 'gulp-plumber'
 template = require 'gulp-template'
-clean = require('del')
+clean = require 'del'
 
 # configuration
 appRoot = __dirname
@@ -21,6 +22,10 @@ log = (msg) ->
 # returns parsed package.json
 getPackage = ->
   JSON.parse fs.readFileSync('./package.json', 'utf8')
+
+# used to prevent watch from breaking on compilation error
+swallowError = (error) ->
+  log error, 'error'
 
 # default task that's run with 'gulp'
 gulp.task 'default', [
@@ -52,10 +57,12 @@ gulp.task 'build', ->
   log 'compiling coffeescript'
   gulp
     .src(sourceDir)
+    .pipe(plumber())
     .pipe(coffee(
       bare: true
       sourceMap: false
-    ).on('error', gutil.log))
+    ))
+    .on('error', swallowError)
     .pipe(
       gulp.dest buildDir
     )
