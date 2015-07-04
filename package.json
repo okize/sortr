@@ -33,6 +33,7 @@
     "gulp": "*",
     "gulp-coffee": "*",
     "gulp-coffeelint": "*",
+    "gulp-plumber": "*",
     "gulp-template": "*",
     "gulp-util": "*"
   },
