@@ -28,11 +28,8 @@
     "read-chunk": "^1.0.0"
   },
   "devDependencies": {
-    "coffee-script": "*",
     "del": "*",
     "gulp": "*",
-    "gulp-coffee": "*",
-    "gulp-coffeelint": "*",
     "gulp-plumber": "*",
     "gulp-template": "*",
     "gulp-util": "*"
