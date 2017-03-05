@@ -28,11 +28,6 @@
     "read-chunk": "^1.0.0"
   },
   "devDependencies": {
-    "del": "*",
-    "gulp": "*",
-    "gulp-plumber": "*",
-    "gulp-template": "*",
-    "gulp-util": "*"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
