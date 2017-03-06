@@ -6,6 +6,9 @@
   "bin": {
     "sortr": "./bin/sortr.js"
   },
+  "engines": {
+    "node": ">= 6.0"
+  },
   "keywords": [
     "organize",
     "photos",
@@ -28,12 +31,13 @@
     "read-chunk": "^1.0.0"
   },
   "devDependencies": {
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb-base": "^11.1.0",
+    "eslint-plugin-import": "^2.2.0"
   },
   "scripts": {
+    "lint": "eslint --cache . && echo \"eslint: no lint errors found\" || true",
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "engines": {
-    "node": ">= 6.0",
   },
   "repository": {
     "type": "git",
