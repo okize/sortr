@@ -7,7 +7,7 @@
     "sortr": "./bin/sortr.js"
   },
   "engines": {
-    "node": ">= 6.0"
+    "node": ">= 6.4.0"
   },
   "keywords": [
     "organize",
@@ -20,20 +20,20 @@
     "example": "example"
   },
   "dependencies": {
-    "bluebird": "^3.5.0",
-    "chalk": "^2.0.0",
+    "bluebird": "^3.5.1",
+    "chalk": "^2.4.1",
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
     "fs-extra": "^3.0.0",
-    "is-jpg": "^1.0.0",
-    "lodash": "^4.0.0",
-    "moment": "^2.8.0",
+    "is-jpg": "^1.0.1",
+    "lodash": "^4.17.10",
+    "moment": "^2.22.2",
     "optimist": "^0.6.0",
-    "read-chunk": "^2.0.0"
+    "read-chunk": "^2.1.0"
   },
   "devDependencies": {
-    "eslint": "^3.16.1",
-    "eslint-config-airbnb-base": "^11.1.0",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-import": "^2.12.0"
   },
   "scripts": {
     "lint": "eslint --cache . && echo \"eslint: no lint errors found\" || true",
