@@ -7,7 +7,7 @@
     "sortr": "./bin/sortr.js"
   },
   "engines": {
-    "node": ">= 6.0"
+    "node": ">= 6.4.0"
   },
   "keywords": [
     "organize",
