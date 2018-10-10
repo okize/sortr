@@ -20,18 +20,18 @@
     "example": "example"
   },
   "dependencies": {
-    "bluebird": "^3.5.1",
+    "bluebird": "^3.5.2",
     "chalk": "^2.4.1",
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
     "fs-extra": "^3.0.0",
     "is-jpg": "^1.0.1",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.11",
     "moment": "^2.22.2",
     "optimist": "^0.6.0",
     "read-chunk": "^2.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.5.0",
+    "eslint": "^5.6.1",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0"
   },
