@@ -21,19 +21,19 @@
   },
   "dependencies": {
     "bluebird": "^3.5.3",
-    "chalk": "^2.4.1",
+    "chalk": "^2.4.2",
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
     "fs-extra": "^3.0.0",
     "is-jpg": "^1.0.1",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "optimist": "^0.6.0",
     "read-chunk": "^2.1.0"
   },
   "devDependencies": {
-    "eslint": "^5.9.0",
+    "eslint": "^5.14.1",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.16.0"
   },
   "scripts": {
     "lint": "eslint --cache . && echo \"eslint: no lint errors found\" || true",
