@@ -24,7 +24,7 @@
     "chalk": "^3.0.0",
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
     "fs-extra": "^3.0.0",
-    "is-jpg": "^1.0.1",
+    "is-jpg": "^2.0.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "optimist": "^0.6.0",
