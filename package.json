@@ -31,10 +31,7 @@
     "read-chunk": "^3.0.0"
   },
   "devDependencies": {
-    "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
-    "eslint-config-okize": "^1.6.0",
-    "eslint-plugin-import": "^2.20.1"
+    "eslint-config-okize": "^1.6.0"
   },
   "scripts": {
     "lint": "eslint --cache . && echo \"eslint: no lint errors found\" || true",
