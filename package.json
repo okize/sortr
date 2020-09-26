@@ -25,13 +25,13 @@
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
     "fs-extra": "^3.0.0",
     "is-jpg": "^2.0.0",
-    "lodash": "^4.17.15",
-    "moment": "^2.24.0",
+    "lodash": "^4.17.20",
+    "moment": "^2.29.0",
     "optimist": "^0.6.0",
     "read-chunk": "^3.0.0"
   },
   "devDependencies": {
-    "eslint-config-okize": "^1.6.0"
+    "eslint-config-okize": "^1.7.0"
   },
   "scripts": {
     "lint": "eslint --cache . && echo \"eslint: no lint errors found\" || true",
