@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "bluebird": "^3.7.2",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "exifdata": "https://github.com/okize/exifdata/archive/0.2.1.tar.gz",
     "fs-extra": "^3.0.0",
     "is-jpg": "^2.0.0",
