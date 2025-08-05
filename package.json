@@ -28,7 +28,7 @@
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "optimist": "^0.6.0",
-    "read-chunk": "^4.0.3"
+    "read-chunk": "^5.0.0"
   },
   "devDependencies": {
     "eslint-config-okize": "^1.7.0"
